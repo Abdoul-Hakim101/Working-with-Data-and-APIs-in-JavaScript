@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data/APIs 1</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<img src="" alt="photo" id="photo">
+
+<script>
+    console.log("about to fetch");
+
+    catchPhoto().then(response => {
+        console.log('yay')
+    }).catch(error => {
+            console.error(error)
+        }
+    );
+    async function catchPhoto() {
+        const response = await fetch('images.jpeg');
+        const blob = await response.blob();
+        document.getElementById('photo').src = URL.createObjectURL(blob);
+    }
+
+    // fetch('images.jpeg')
+    //     .then(res => {
+    //         console.log(res);
+    //         return res.blob();
+    //     }).then(blob => {
+    //     console.log(blob)
+    //     document.getElementById("photo").src = URL.createObjectURL(blob);
+    // }).catch(error => {
+    //         console.error(error)
+    //     }
+    // );
+
+</script>
+</body>
+</html>
