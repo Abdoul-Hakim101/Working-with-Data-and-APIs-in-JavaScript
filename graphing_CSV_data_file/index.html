@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data/APIs 1</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+<h1>Fetch csv</h1>
+<div>
+    <canvas id="chart" style="width: 50px; height: 50px;"></canvas>
+</div>
+
+<script>
+    graph();
+
+    async function graph() {
+        const x = []
+        const y = [];
+        await getData(x, y);
+        const ctx = document.getElementById('chart');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: x,
+                datasets: [{
+                    label: 'Annual Temperature Anomalies (deg C) AIRS v6 vs. 2003-2023',
+                    data: y,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: false
+                    }
+                }
+            }
+        });
+    }
+
+    async function getData(x, y) {
+        const response = await fetch("ZonAnn.Ts+dSST.csv");
+        const data = await response.text();
+        const table = data.split('\n').slice(1);
+        table.forEach(row => {
+            const columns = row.split(',');
+            x.push(parseInt(columns[0]));
+            y.push(parseFloat(columns[1]) + 14);
+            console.log(parseFloat(columns[1]) + 14)
+        })
+    }
+</script>
+</body>
+</html>
