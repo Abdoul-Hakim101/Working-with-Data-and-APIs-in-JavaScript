@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data/APIs 1</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="poem">
+    <h2>Fetch a Poem</h2>
+    <p id="poem"></p>
+</div>
+<script>
+    catchPoem().then(response => {
+            document.getElementById("poem").innerText = response;
+        }
+    ).catch(error => {
+        console.log(error);
+    })
+
+    async function catchPoem() {
+        const response = await fetch("poem.txt");
+        return await response.text();
+    }
+</script>
+</body>
+</html>
