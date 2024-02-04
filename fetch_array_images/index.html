@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data/APIs 1</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<h1>Fetch Images</h1>
+<script>
+    const filenames = [
+        "./images/image-1.jpg",
+        "./images/image-2.jpg",
+        "./images/image-3.jpg",
+    ]
+    getImages(filenames)
+        .then(response => console.log('yay'))
+        .catch(error => console.log(error));
+
+    async function getImages(filenames) {
+        for (let filename of filenames) {
+            const response = await fetch(filename);
+            const blob = await response.blob();
+            const img = document.createElement("img");
+            img.src = URL.createObjectURL(blob);
+            document.body.append(img);
+        }
+    }
+</script>
+</body>
+</html>
